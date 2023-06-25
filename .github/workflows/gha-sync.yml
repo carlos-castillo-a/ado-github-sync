@@ -17,6 +17,6 @@ jobs:
           foreach ($object in $ListObject.RepoList) {
             Write-Host "--------------- Current syncing for repo $($object.AzureRepoName) ----------------------------------"
             Set-Location $env:GITHUB_WORKSPACE
-            bash -c .\ado-github-sync.sh "${{ secrets.GITHUBDESTINATIONPAT }}" "${{ secrets.ADOSOURCEPAT }}" "$($object.AzureRepoName)" "$($object.ADOCloneURL)" "$($object.GitHubCloneURL)"
+            bash -c ./ado-github-sync.sh "${{ secrets.GITHUBDESTINATIONPAT }}" "${{ secrets.ADOSOURCEPAT }}" "$($object.AzureRepoName)" "$($object.ADOCloneURL)" "$($object.GitHubCloneURL)"
             Write-Host "---------------------------------------------------------------------------------------------------"
           }
