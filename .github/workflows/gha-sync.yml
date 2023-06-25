@@ -11,12 +11,12 @@ jobs:
         uses: actions/checkout@v2
       - name: Sync ADO to GitHub
         run: |
-          $ListObject = Get-Content -Path "$($env:GITHUB_WORKSPACE)/repo-list.json" | ConvertFrom-Json
+          $ListObject = Get-Content -Path "$($env:GITHUB_WORKSPACE)\repo-list.json" | ConvertFrom-Json
           Write-Host "Current directory: $PWD"
           Write-Host "ListObject: $ListObject"
           foreach ($object in $ListObject.RepoList) {
             Write-Host "--------------- Current syncing for repo $($object.AzureRepoName) ----------------------------------"
             Set-Location $env:GITHUB_WORKSPACE
-            bash -c ./ado-github-sync.sh "${{ secrets.GITHUBDESTINATIONPAT }}" "${{ secrets.ADOSOURCEPAT }}" "$($object.AzureRepoName)" "$($object.ADOCloneURL)" "$($object.GitHubCloneURL)"
+            bash -c .\ado-github-sync.sh "${{ secrets.GITHUBDESTINATIONPAT }}" "${{ secrets.ADOSOURCEPAT }}" "$($object.AzureRepoName)" "$($object.ADOCloneURL)" "$($object.GitHubCloneURL)"
             Write-Host "---------------------------------------------------------------------------------------------------"
           }
