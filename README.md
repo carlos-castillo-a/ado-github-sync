@@ -8,7 +8,8 @@ This repository provides a solution to periodically synchronize a private Azure 
 
 ```mermaid
 flowchart LR
-   ADO Repository -- Sync Script --> GitHub Actions -- Push --> GitHub Repository
+   A[ADO Repository] -- Sync Script --> B[GitHub Actions]
+   B[GitHub Actions] -- Push --> C[GitHub Repository]
 ```
 
 The synchronization process involves the following steps:
