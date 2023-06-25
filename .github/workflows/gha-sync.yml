@@ -1,0 +1,20 @@
+name: ADO to GitHub Sync
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: windows-2019
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Sync ADO to GitHub
+        run: |
+          $ListObject = Get-Content -Path "$($env:GITHUB_WORKSPACE)/ADORepoList.json" | ConvertFrom-Json
+          foreach ($object in $ListObject.RepoList) {
+            Write-Host "--------------- Current syncing for repo $($object.AzureRepoName) ----------------------------------"
+            Set-Location $env:GITHUB_WORKSPACE
+            ./SynADOtoGitHub.ps1 -GitHubDestinationPAT ${{ secrets.GITHUBDESTINATIONPAT }} -ADOSourcePAT ${{ secrets.ADOSOURCEPAT }} -AzureRepoName $($object.AzureRepoName) -ADOCloneURL $($object.ADOCloneURL) -GitHubCloneURL  $($object.GitHubCloneURL)
+            Write-Host "---------------------------------------------------------------------------------------------------"
+          }
