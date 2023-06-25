@@ -1,7 +1,8 @@
 name: ADO to GitHub Sync
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   sync:
