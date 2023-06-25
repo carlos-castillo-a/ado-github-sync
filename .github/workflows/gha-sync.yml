@@ -23,6 +23,6 @@ jobs:
               ADOSOURCEPAT: "${{ secrets.ADOSOURCEPAT }}" 
               AzureRepoName "$($object.AzureRepoName)" 
               ADOCloneURL: "$($object.ADOCloneURL)" 
-              GitHubCloneURL: "$($object.GitHubCloneURL)""''
+              GitHubCloneURL: "$($object.GitHubCloneURL)"
             Write-Host "---------------------------------------------------------------------------------------------------"
           }
