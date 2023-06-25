@@ -1,7 +1,5 @@
 # Azure DevOps Sync with GitHub
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
 This repository provides a solution to periodically synchronize a private Azure DevOps repository with a secondary public GitHub repository. It includes a bash script and GitHub Actions workflow that automate the synchronization process.
 
 ## Overview
@@ -20,7 +18,7 @@ The synchronization process involves the following steps:
 
 3. **GitHub Repository**: The secondary public repository hosted on GitHub, acting as a mirror of the Azure DevOps repository.
 
-4. **GitHub Actions**: A GitHub Actions workflow (`gha-sync.yml`) is triggered periodically or on demand to execute the sync script and keep the GitHub repository up to date.
+4. **GitHub Actions**: A GitHub Actions workflow (`sync.yml`) is triggered periodically or on demand to execute the sync script and keep the GitHub repository up to date.
 
 ## Getting Started
 
@@ -36,7 +34,7 @@ To use this synchronization method, follow these steps:
 
 5. In the GitHub repository, go to the **Settings** tab, then select **Secrets**. Add the required secrets (e.g., Azure DevOps credentials) that will be used during the synchronization process.
 
-6. In the `.github/workflows/gha-sync.yml` file, adjust the synchronization frequency or triggers according to your needs.
+6. In the `.github/workflows/sync.yml` file, adjust the synchronization frequency or triggers according to your needs.
 
 7. Commit and push the changes to your GitHub repository.
 
@@ -45,9 +43,5 @@ To use this synchronization method, follow these steps:
 ## Contributions
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please submit an issue or pull request in this repository.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ---
