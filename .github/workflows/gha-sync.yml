@@ -15,7 +15,6 @@ jobs:
         run: |
           ListObject=$(cat "$GITHUB_WORKSPACE/repo-list.json" | jq -r '.RepoList[] | @base64')
           echo "Current directory: $PWD"
-          echo "ListObject: $ListObject"
           while IFS= read -r encodedObject; do
             object=$(echo "$encodedObject" | base64 --decode)
             AzureRepoName=$(echo "$object" | jq -r '.AzureRepoName')
