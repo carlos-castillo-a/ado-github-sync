@@ -3,9 +3,9 @@
 # Define script parameters
 GitHubDestinationPAT="$1"
 ADOSourcePAT="$2"
-AzureRepoName="terraform-cloud"
-ADOCloneURL="dev.azure.com/castillo-a/Carlos-Castillo/_git/terraform-cloud"
-GitHubCloneURL="github.com/carlos-castillo-a/terraform-cloud.git"
+AzureRepoName="$3"
+ADOCloneURL="$4"
+GitHubCloneURL="$5"
 
 echo ' - - - - - - - - - - - - - - - - - - - - - - - - -'
 echo ' Reflect Azure DevOps repo changes to GitHub repo'
