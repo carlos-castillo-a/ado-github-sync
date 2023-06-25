@@ -5,24 +5,27 @@ on:
 
 jobs:
   sync:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
       - name: Sync ADO to GitHub
         run: |
-          $ListObject = GC -Path "$($env:GITHUB_WORKSPACE)\repo-list.json" | ConvertFrom-Json
-          Write-Host "Current directory: $PWD"
-          Write-Host "ListObject: $ListObject"
-          foreach ($object in $ListObject.RepoList) {
-            Write-Host "--------------- Current syncing for repo $($object.AzureRepoName) ----------------------------------"
-            Set-Location $($env:GITHUB_WORKSPACE)
-            bash -c ./ado-github-sync.sh 
-            Write-Host "---------------------------------------------------------------------------------------------------"
-          }
-        env: 
-          GITHUBDESTINATIONPAT: "${{ secrets.GITHUBDESTINATIONPAT }}" 
-          ADOSOURCEPAT: "${{ secrets.ADOSOURCEPAT }}" 
-          AzureRepoName: "$($object.AzureRepoName)" 
-          ADOCloneURL: "$($object.ADOCloneURL)" 
-          GitHubCloneURL: "$($object.GitHubCloneURL)"
+          ListObject=$(cat "$GITHUB_WORKSPACE/repo-list.json" | jq -r '.RepoList[] | @base64')
+          echo "Current directory: $PWD"
+          echo "ListObject: $ListObject"
+          while IFS= read -r encodedObject; do
+            object=$(echo "$encodedObject" | base64 --decode)
+            AzureRepoName=$(echo "$object" | jq -r '.AzureRepoName')
+            ADOCloneURL=$(echo "$object" | jq -r '.ADOCloneURL')
+            GitHubCloneURL=$(echo "$object" | jq -r '.GitHubCloneURL')
+            echo "--------------- Current syncing for repo $AzureRepoName ----------------------------------"
+            cd "$GITHUB_WORKSPACE"
+            bash ./ado-github-sync.sh "$GITHUBDESTINATIONPAT" "$ADOSOURCEPAT" "$AzureRepoName" "$ADOCloneURL" "$GitHubCloneURL"
+            echo "---------------------------------------------------------------------------------------------------"
+          done <<< "$ListObject"
+        env:
+          GITHUBDESTINATIONPAT: ${{ secrets.GITHUBDESTINATIONPAT }}
+          ADOSOURCEPAT: ${{ secrets.ADOSOURCEPAT }}
