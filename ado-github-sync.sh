@@ -31,10 +31,11 @@ cd "$githubDir" || exit
 # Clone Azure DevOps repository
 git clone --mirror "https://$ADOSourcePAT@$ADOCloneURL"
 
-# Add remote for GitHub repository
+# Add remote for GitHub repository if it doesn't exist
 cd "$destination" || exit
-git remote rm secondary
-git remote add --mirror=fetch secondary "https://$GitHubDestinationPAT@$GitHubCloneURL"
+if ! git remote | grep -q "secondary"; then
+  git remote add --mirror=fetch secondary "https://$GitHubDestinationPAT@$GitHubCloneURL"
+fi
 
 # Fetch changes from Azure DevOps repository
 git fetch origin
