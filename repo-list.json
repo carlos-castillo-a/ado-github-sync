@@ -1,9 +1,9 @@
 {
     "RepoList" : [
         {
-            "AzureRepoName": "terraform-cloud",
-            "ADOCloneURL": "dev.azure.com/castillo-a/Carlos-Castillo/_git/terraform-cloud",
-            "GitHubCloneURL": "github.com/carlos-castillo-a/terraform-cloud.git"
+            "AzureRepoName": "terraform",
+            "ADOCloneURL": "dev.azure.com/castillo-a/Carlos-Castillo/_git/terraform",
+            "GitHubCloneURL": "github.com/carlos-castillo-a/terraform.git"
         }
     ]
 }
